@@ -17,6 +17,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { apiCall } from "@/utils/helper";
+import toast from "react-hot-toast";
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
@@ -32,10 +33,10 @@ export const StoreModal = () => {
   const onSubmit = async (values: z.infer<typeof createStoreSchema>) => {
     try {
       setIsLoading(true)
-      const result = await apiCall("/api/createStore", "POST", { name: values.name })
-      console.log(result)
+      const result = await apiCall("/api/store/createStore", "POST", { name: values.name })
+      window.location.assign(`${result?.store?.id}`)
     } catch (error) {
-      
+      console.log(error)
     } finally{
       setIsLoading(false)
     }

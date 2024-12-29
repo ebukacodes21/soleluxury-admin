@@ -1,30 +1,18 @@
-import Navbar from "@/components/navbar";
-import { COOKIE_NAME, routes } from "@/constants";
-import apiConfig from "@/services/apiconfig";
-import { apiCall } from "@/utils/helper";
-import axios from "axios";
+import React from "react";
+import { Button } from "./ui/button";
+import MainNav from "./main-nav";
+import Switcher from "./switcher";
 import { cookies } from "next/headers";
+import { COOKIE_NAME, routes } from "@/constants";
 import { redirect } from "next/navigation";
+import axios from "axios";
+import apiConfig from "@/services/apiconfig";
 
-export default async function DashboardLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { storeId: string };
-}) {
-  const { storeId } = await params; 
-
+const Navbar = async () => {
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;
-
   if (!userToken) {
     redirect(routes.SIGNIN);
-  }
-
-  if (!storeId) {
-    console.error("Store ID is missing!");
-    return null; 
   }
 
   let storeData = null;
@@ -32,8 +20,7 @@ export default async function DashboardLayout({
   try {
     const res = await axios({
       method: "GET",
-      url: apiConfig.getStore,
-      params: { id: Number(storeId) },
+      url: apiConfig.getStores,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -50,14 +37,21 @@ export default async function DashboardLayout({
     }
   }
 
-  if (!storeData){
-    redirect(routes.HOME)
-  }
-
   return (
-    <>
-    <Navbar />
-    {children}
-    </>
+    <div className="border-b ">
+      <div className="flex h-16 items-center px-4">
+        <div>
+          <Switcher items={storeData.stores}/>
+        </div>
+        <div>
+          <MainNav className="mx-6" />
+        </div>
+        <div className="ml-auto flex items-center space-x-4">
+          <Button>Logout</Button>
+        </div>
+      </div>
+    </div>
   );
-}
+};
+
+export default Navbar;
