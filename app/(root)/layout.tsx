@@ -1,30 +1,19 @@
-import Navbar from "@/components/navbar";
 import { COOKIE_NAME, routes } from "@/constants";
 import apiConfig from "@/services/apiconfig";
-import { apiCall } from "@/utils/helper";
-import axios from "axios";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import React from "react";
+import axios from "axios";
 
-export default async function DashboardLayout({
+export default async function SetupLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { storeId: string };
 }) {
-  const { storeId } = await params; 
-
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;
-
   if (!userToken) {
     redirect(routes.SIGNIN);
-  }
-
-  if (!storeId) {
-    console.error("Store ID is missing!");
-    return null; 
   }
 
   let storeData = null;
@@ -32,8 +21,7 @@ export default async function DashboardLayout({
   try {
     const res = await axios({
       method: "GET",
-      url: apiConfig.getStore,
-      params: { id: Number(storeId) },
+      url: apiConfig.getFirstStore,
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -50,14 +38,13 @@ export default async function DashboardLayout({
     }
   }
 
-  if (!storeData){
-    redirect(routes.HOME)
+  if (storeData && storeData.store.id) {
+    redirect(`${storeData.store.id}`);
   }
 
   return (
-    <>
-    <Navbar />
-    {children}
-    </>
+    <div>
+      {children}
+    </div>
   );
 }

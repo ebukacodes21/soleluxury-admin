@@ -12,7 +12,5 @@ export default function Home() {
     }
   }, [isOpen, onOpen]);
 
-  return (
-    <p>root</p>
-  );
+  return null
 }

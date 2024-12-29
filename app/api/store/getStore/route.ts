@@ -1,21 +1,21 @@
-// import { COOKIE_NAME } from "@/constants";
+import { COOKIE_NAME } from "@/constants";
 import apiConfig from "@/services/apiconfig";
 import axios from "axios";
 import { NextResponse, NextRequest } from 'next/server';
 
-export async function POST(request: NextRequest) {
-    const { method } = request;
+export async function GET(request: NextRequest) {
+    const { method, cookies } = request;
     const body = await request.json();
-    // const token = cookies.get(COOKIE_NAME)?.value || ""
+    const token = cookies.get(COOKIE_NAME)?.value || ""
     
     try {
         const res = await axios({
             method: method,
-            url: apiConfig.createStore,
+            url: apiConfig.getStore,
             data: body,
-            // headers: {
-            //     Authorization: `Bearer ${token}`
-            // }
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         });
 
         return NextResponse.json(res.data);
