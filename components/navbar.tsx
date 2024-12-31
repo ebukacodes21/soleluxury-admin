@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "./ui/button";
 import MainNav from "./main-nav";
 import Switcher from "./switcher";
 import { cookies } from "next/headers";
@@ -45,9 +44,6 @@ const Navbar = async () => {
         </div>
         <div>
           <MainNav className="mx-6" />
-        </div>
-        <div className="ml-auto flex items-center space-x-4">
-          <Button>Logout</Button>
         </div>
       </div>
     </div>

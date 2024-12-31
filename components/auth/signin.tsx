@@ -34,7 +34,7 @@ const Signin = () => {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       setIsLoading(true);
-      const result = await apiCall("/api/login", "POST", {
+      const result = await apiCall("/api/user/login", "POST", {
         email: values.email,
         password: values.password,
       });

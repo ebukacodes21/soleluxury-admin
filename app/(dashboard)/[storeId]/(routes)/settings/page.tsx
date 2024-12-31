@@ -1,29 +1,22 @@
-import Navbar from "@/components/navbar";
-import { COOKIE_NAME, routes } from "@/constants";
-import apiConfig from "@/services/apiconfig";
-import axios from "axios";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import React, { FC } from 'react'
+import { cookies } from 'next/headers'
+import { COOKIE_NAME, routes } from '@/constants'
+import { redirect } from 'next/navigation'
+import axios from 'axios'
+import apiConfig from '@/services/apiconfig'
+import SettingsForm from './components/settings-form'
 
-export default async function DashboardLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode;
-  params: { storeId: string };
-}) {
+type SettingProp = {
+  params : { storeId: string }
+}
+
+const SettingPage: FC<SettingProp> = async ({ params }) => {
   const { storeId } = await params; 
-
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;
 
-  if (!userToken) {
+  if (!userToken){
     redirect(routes.SIGNIN);
-  }
-
-  if (!storeId || storeId === typeof undefined) {
-    console.error("Store ID is missing!");
-    return null; 
   }
 
   let storeData = null;
@@ -49,14 +42,17 @@ export default async function DashboardLayout({
     }
   }
 
-  if (!storeData || storeData.error){
+  if(!storeData || storeData.error){
     redirect(routes.HOME)
   }
 
   return (
-    <>
-    <Navbar />
-    {children}
-    </>
-  );
+    <div className='flex-col'>
+      <div className='flex-1 space-y-4 p-8 pt-6'>
+        <SettingsForm initialData={storeData.store}/>
+      </div>
+    </div>
+  )
 }
+
+export default SettingPage

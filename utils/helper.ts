@@ -1,11 +1,10 @@
 import axios from "axios";
 
-export const apiCall = async (url: string, method: string, data?: object, params?: object) => {
+export const apiCall = async (url: string, method: string, data?: object) => {
   try {
     const res = await axios({
       url,
       method,
-      params,
       data,
     });
     return res.data;
