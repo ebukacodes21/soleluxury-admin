@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import React from "react";
+import { Button } from "./ui/button";
 
 const MainNav = ({
   className,
@@ -12,6 +13,11 @@ const MainNav = ({
   const params = useParams();
 
   const routes = [
+    {
+      href: `/${params.storeId}`,
+      label: "Overview",
+      active: pathName === `/${params.storeId}`,
+    },
     {
       href: `/${params.storeId}/settings`,
       label: "Settings",
@@ -35,6 +41,10 @@ const MainNav = ({
           {route.label}
         </Link>
       ))}
+
+      <div className="ml-auto flex items-center space-x-4">
+        <Button>Logout</Button>
+      </div>
     </nav>
   );
 };

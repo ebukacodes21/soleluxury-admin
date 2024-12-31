@@ -38,8 +38,8 @@ export default async function SetupLayout({
     }
   }
 
-  if (storeData && storeData.store.id) {
-    redirect(`${storeData.store.id}`);
+  if (storeData && !storeData.error) {
+    redirect(`${storeData?.store?.id}`);
   }
 
   return (

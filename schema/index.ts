@@ -8,3 +8,7 @@ export const loginSchema = z.object({
     email: z.string().email("must be a valid email"),
     password: z.string().min(8, "minimum of 8 characters")
 })
+
+export const settingSchema = z.object({
+    name: z.string().min(1, "store name is required")
+})
