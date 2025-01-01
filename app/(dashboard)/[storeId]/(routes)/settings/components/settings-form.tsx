@@ -133,7 +133,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
         </form>
       </Form>
       <Separator />
-      <ApiAlert title="PUBLIC_API_URL" description={`${origin}/api/${params.storeId}`} variant="public"/>
+      <ApiAlert title="PUBLIC_API_URL" description={`${origin}/api/${params.storeId}`} variant="admin"/>
     </>
   );
 };

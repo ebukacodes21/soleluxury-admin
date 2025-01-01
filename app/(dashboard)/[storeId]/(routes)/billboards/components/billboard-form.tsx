@@ -104,7 +104,7 @@ const BillboardForm: FC<BillboardFormProp> = ({ initialData }) => {
 
     toast.success(result.message);
     router.refresh();
-    router.push(routes.HOME);
+    router.push(`/${params.storeId}/billboards`);
     setLoading(false);
     setOpen(false);
   };
@@ -178,7 +178,6 @@ const BillboardForm: FC<BillboardFormProp> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
-      <Separator />
     </>
   );
 };

@@ -1,13 +1,15 @@
-import React from 'react'
-import BillboardClient from './components/client'
-import axios from 'axios';
-import apiConfig from '@/services/apiconfig';
-import { redirect } from 'next/navigation';
-import { COOKIE_NAME, routes } from '@/constants';
-import { cookies } from 'next/headers';
+import React from "react";
+import BillboardClient from "./components/client";
+import axios from "axios";
+import apiConfig from "@/services/apiconfig";
+import { redirect } from "next/navigation";
+import { COOKIE_NAME, routes } from "@/constants";
+import { cookies } from "next/headers";
+import { BillboardColumn } from "./components/column";
+import { format } from "date-fns";
 
-const page = async ({ params }: { params : { storeId: string }}) => {
-  const { storeId } = await params
+const page = async ({ params }: { params: { storeId: string } }) => {
+  const { storeId } = await params;
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;
 
@@ -37,13 +39,21 @@ const page = async ({ params }: { params : { storeId: string }}) => {
     }
   }
 
+  const formattedBillboards: BillboardColumn[] = billboards.billboards.map(
+    (item: any) => ({
+      id: item.id,
+      label: item.label,
+      created_at: format(item.created_at, "MMM do, yyyy"),
+    })
+  );
+
   return (
-    <div className='flex-col'>
-      <div className='flex-1 space-y-4 p-8 pt-6'>
-        <BillboardClient data={billboards.billboards} />
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <BillboardClient data={formattedBillboards} />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
