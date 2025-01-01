@@ -19,6 +19,7 @@ import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { routes } from "@/constants";
+import Image from "next/image";
 
 const Signin = () => {
   const [loading, setIsLoading] = useState<boolean>(false);

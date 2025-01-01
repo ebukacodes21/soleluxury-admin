@@ -3,7 +3,7 @@ import ApiConfig from "@/services/apiconfig";
 import axios from "axios";
 import { NextResponse, NextRequest } from "next/server";
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const { method, cookies } = request;
   const token = cookies.get(COOKIE_NAME)?.value || ""
 

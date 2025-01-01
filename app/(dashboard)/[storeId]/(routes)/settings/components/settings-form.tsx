@@ -19,7 +19,7 @@ import { settingSchema } from "@/schema";
 import { apiCall } from "@/utils/helper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -36,7 +36,8 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const origin = useOrigin()
+  const origin = useOrigin();
+  const params = useParams()
 
   const form = useForm<settingFormValue>({
     resolver: zodResolver(settingSchema),
@@ -48,7 +49,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
   const onSubmit = async (data: settingFormValue) => {
     try {
       setLoading(true);
-      const result = await apiCall("/api/store/updateStore", "PATCH", {
+      const result = await apiCall("/api/store/update", "PATCH", {
         ...data,
         id: Number(initialData.id),
       });
@@ -64,7 +65,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
   const onConfirm = async () => {
     try {
       setLoading(true);
-      const result = await apiCall("/api/store/deleteStore", "POST", {
+      const result = await apiCall("/api/store/delete", "POST", {
         id: Number(initialData.id),
       });
       toast.success(result.message);
@@ -132,7 +133,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
         </form>
       </Form>
       <Separator />
-      <ApiAlert title="PUBLIC_API_URL" description={`${origin}/api/${initialData.id}`} variant="public"/>
+      <ApiAlert title="PUBLIC_API_URL" description={`${origin}/api/${params.storeId}`} variant="public"/>
     </>
   );
 };

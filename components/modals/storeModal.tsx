@@ -33,7 +33,7 @@ export const StoreModal = () => {
   const onSubmit = async (values: z.infer<typeof createStoreSchema>) => {
     try {
       setIsLoading(true)
-      const result = await apiCall("/api/store/createStore", "POST", { name: values.name })
+      const result = await apiCall("/api/store/create", "POST", { name: values.name })
       window.location.assign(`${result?.store?.id}`)
     } catch (error) {
       console.log(error)
