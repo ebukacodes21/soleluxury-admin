@@ -14,6 +14,7 @@ const apiConfig = {
     deleteStore: `${main}/delete-store`,
 
     getBillboard: `${main}/get-billboard`,
+    getBillboards: `${main}/get-billboards`,
     deleteBillboard: `${main}/delete-billboard`,
     updateBillboard: `${main}/update-billboard`,
     createBillboard: `${main}/create-billboard`,

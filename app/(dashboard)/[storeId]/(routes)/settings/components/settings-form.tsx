@@ -37,7 +37,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const origin = useOrigin();
-  const params = useParams()
+  const params = useParams();
 
   const form = useForm<settingFormValue>({
     resolver: zodResolver(settingSchema),
@@ -51,7 +51,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
       setLoading(true);
       const result = await apiCall("/api/store/update", "PATCH", {
         ...data,
-        id: Number(initialData.id),
+        id: Number(params.storeId),
       });
       router.refresh();
       toast.success(result.message);
@@ -66,7 +66,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
     try {
       setLoading(true);
       const result = await apiCall("/api/store/delete", "POST", {
-        id: Number(initialData.id),
+        id: Number(params.storeId),
       });
       toast.success(result.message);
       router.refresh();

@@ -14,20 +14,24 @@ import ImageUpload from "@/components/ui/image-upload";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { routes } from "@/constants";
-import { useOrigin } from "@/hooks/useOrigin";
 import { billboardSchema } from "@/schema";
 import { apiCall } from "@/utils/helper";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { ClipLoader } from "react-spinners";
 import * as z from "zod";
 
 type BillboardFormProp = {
-  initialData: { imageUrl: string; label: string; id: number; storeId: number } | null;
+  initialData: {
+    image_url: string;
+    label: string;
+    id: number;
+    store_id: number;
+  } | null;
 };
 
 type billboardFormValue = z.infer<typeof billboardSchema>;
@@ -36,7 +40,6 @@ const BillboardForm: FC<BillboardFormProp> = ({ initialData }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const origin = useOrigin();
   const params = useParams();
 
   const title = initialData?.label ? "Edit billboard" : "Create billboard";
@@ -52,39 +55,58 @@ const BillboardForm: FC<BillboardFormProp> = ({ initialData }) => {
     resolver: zodResolver(billboardSchema),
     defaultValues: initialData || {
       label: "",
-      imageUrl: "",
+      image_url: "",
     },
   });
 
   const onSubmit = async (data: billboardFormValue) => {
     setLoading(true);
     let result;
-    if(initialData?.label){
+    if (initialData?.label) {
       result = await apiCall("/api/billboard/update", "PATCH", {
-        ...data,
-        id: Number(initialData?.id),
+        id: Number(params.billboardId),
+        store_id: Number(params.storeId),
+        image_url: data.image_url,
+        label: data.label,
       });
     } else {
-      result = await apiCall("/api/billboard/create", "POST", { data });
+      result = await apiCall("/api/billboard/create", "POST", {
+        store_id: Number(params.storeId),
+        image_url: data.image_url,
+        label: data.label,
+      });
     }
 
+    if (result.name === "AxiosError") {
+      setLoading(false);
+      return;
+    }
+
+    router.refresh();
+    router.push(`/${params.storeId}/billboards`)
+    toast.success(message);
+    setLoading(false);
   };
 
   const onConfirm = async () => {
-    try {
-      setLoading(true);
-      const result = await apiCall("/api/billboard/delete", "POST", {
-        id: Number(initialData?.id),
-      });
-      toast.success(result.message);
-      router.refresh();
-      router.push(routes.HOME);
-    } catch (error) {
-      toast.error("remove all products and categories first");
-    } finally {
+    setLoading(true);
+    const result = await apiCall("/api/billboard/delete", "POST", {
+      id: Number(initialData?.id),
+    });
+
+    if (result.name === "AxiosError") {
       setLoading(false);
-      setOpen(false);
+      toast.error(
+        "remove all products and categories using this billboard first"
+      );
+      return;
     }
+
+    toast.success(result.message);
+    router.refresh();
+    router.push(routes.HOME);
+    setLoading(false);
+    setOpen(false);
   };
 
   return (
@@ -118,7 +140,7 @@ const BillboardForm: FC<BillboardFormProp> = ({ initialData }) => {
         >
           <FormField
             control={form.control}
-            name="imageUrl"
+            name="image_url"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Background image:</FormLabel>
@@ -142,7 +164,7 @@ const BillboardForm: FC<BillboardFormProp> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Label:</FormLabel>
                   <FormControl>
-                    <Input disabled={loading} placeholder="name" {...field} />
+                    <Input disabled={loading} placeholder="billboard label" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

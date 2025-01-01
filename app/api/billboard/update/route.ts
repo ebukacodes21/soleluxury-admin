@@ -11,7 +11,7 @@ export async function PATCH(request: NextRequest) {
     try {
         const res = await axios({
             method: method,
-            url: ApiConfig.getBillboard,
+            url: ApiConfig.updateBillboard,
             data: body,
             headers: {
                 Authorization: `Bearer ${token}`

@@ -15,5 +15,5 @@ export const settingSchema = z.object({
 
 export const billboardSchema = z.object({
     label: z.string().min(1, "minimum of 8 characters"),
-    imageUrl: z.string().min(1, "minimum of 8 characters"),
+    image_url: z.string().min(1, "minimum of 8 characters"),
 })
