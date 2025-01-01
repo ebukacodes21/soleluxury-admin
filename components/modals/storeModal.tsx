@@ -36,7 +36,7 @@ export const StoreModal = () => {
       const result = await apiCall("/api/store/create", "POST", { name: values.name })
       window.location.assign(`${result?.store?.id}`)
     } catch (error) {
-      console.log(error)
+      toast.error("error while creating store")
     } finally{
       setIsLoading(false)
     }
