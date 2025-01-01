@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import Image from "next/image";
 
 type CardProps = {
     title: string;
@@ -19,6 +20,7 @@ type CardProps = {
 export function Cardd({children, title, description}: CardProps) {
   return (
     <Card className="w-[350px]">
+      <Image height={80} width={80} src={'/logo.jpg'} alt="logo" className=""/>
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

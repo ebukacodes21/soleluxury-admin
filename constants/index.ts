@@ -1,9 +1,9 @@
 const routes = {
-    HOME: "/",
+  HOME: "/",
 
-    SIGNIN: "/signin",
-}
+  SIGNIN: "/signin",
+};
 
-const COOKIE_NAME = "soleluxury_user"
+const COOKIE_NAME = "soleluxury_user";
 
-export { routes, COOKIE_NAME}
+export { routes, COOKIE_NAME };
