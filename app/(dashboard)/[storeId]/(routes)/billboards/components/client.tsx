@@ -4,14 +4,13 @@ import { Button } from "@/components/ui/button";
 import Heading from "@/components/ui/heading";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
+import { BillboardColumn, columns } from "./column";
+import { Separator } from "@/components/ui/separator";
+import { DataTable } from "@/components/ui/data-table";
+import ApiList from "@/components/ui/api-list";
 
 type BillboardClientProp = {
-  data: {
-    image_url: string;
-    label: string;
-    id: number;
-    store_id: number;
-  }[]
+  data: BillboardColumn[]
 }
 
 const BillboardClient:FC<BillboardClientProp> = ({ data }) => {
@@ -33,6 +32,11 @@ const BillboardClient:FC<BillboardClientProp> = ({ data }) => {
           Add New
         </Button>
       </div>
+      <Separator />
+      <DataTable columns={columns} data={data} searchKey="label"/>
+      <Heading title="API" description="API calls for Billboards"/>
+      <Separator />
+      <ApiList entityName="billboards" entityIdName="billboardId"/>
     </>
   );
 };
