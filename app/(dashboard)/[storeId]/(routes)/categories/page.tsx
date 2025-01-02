@@ -1,11 +1,11 @@
 import React from "react";
-import BillboardClient from "./components/client";
+import CategoryClient from "./components/client";
 import axios from "axios";
 import apiConfig from "@/services/apiconfig";
 import { redirect } from "next/navigation";
 import { COOKIE_NAME, routes } from "@/constants";
 import { cookies } from "next/headers";
-import { BillboardColumn } from "./components/column";
+import { CategoryColumn } from "./components/column";
 import { format } from "date-fns";
 
 const page = async ({ params }: { params: { storeId: string } }) => {
@@ -17,41 +17,44 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     redirect(routes.SIGNIN);
   }
 
-  let billboards = null;
+  let categories = null;
   try {
     const res = await axios({
       method: "GET",
-      url: apiConfig.getBillboards,
+      url: apiConfig.getCategories,
       params: { store_id: Number(storeId) },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
     });
 
-    billboards = res.data;
+    categories = res.data;
   } catch (error: any) {
     if (error.code === "ECONNREFUSED") {
-      billboards = { error: "Failed to connect to the server." };
+      categories = { error: "Failed to connect to the server." };
     } else if (error.response) {
-      billboards = { error: error.response.data };
+      categories = { error: error.response.data };
     } else {
-      billboards = { error: "Unknown error occurred." };
+      categories = { error: "Unknown error occurred." };
     }
   }
 
-  const formattedBillboards: BillboardColumn[] = billboards?.billboards?.map(
+  const formattedcategories: CategoryColumn[] = categories?.categories?.map(
     (item: any) => ({
       id: item.id,
-      label: item.label,
+      name: item.name,
+      billboard_id: item.billboard_id,
+      billboard_label: item.billboard_label,
       created_at: format(item.created_at, "MMM do, yyyy"),
     })
   );
-  const data = formattedBillboards ? formattedBillboards : []
+
+  const data = formattedcategories ? formattedcategories : []
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <BillboardClient data={data} />
+        <CategoryClient data={data} />
       </div>
     </div>
   );

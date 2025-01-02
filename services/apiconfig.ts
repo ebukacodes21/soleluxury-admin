@@ -18,6 +18,12 @@ const apiConfig = {
     deleteBillboard: `${main}/delete-billboard`,
     updateBillboard: `${main}/update-billboard`,
     createBillboard: `${main}/create-billboard`,
+
+    getCategory: `${main}/get-category`,
+    getCategories: `${main}/get-categories`,
+    createCategory: `${main}/create-category`,
+    updateCategory: `${main}/update-category`,
+    deleteCategory: `${main}/delete-category`,
 }
 
 export default apiConfig
