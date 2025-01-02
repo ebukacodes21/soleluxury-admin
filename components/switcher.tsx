@@ -16,6 +16,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "./ui/command";
+import Image from "next/image";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
@@ -46,7 +47,9 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
   };
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <div className="flex items-center justify-between">
+      <Image src={"/logo2.png"} height={150} width={150} alt="logo"/>
+      <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -105,6 +108,7 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
         </Command>
       </PopoverContent>
     </Popover>
+    </div>
   );
 };
 
