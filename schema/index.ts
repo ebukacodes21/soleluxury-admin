@@ -22,3 +22,8 @@ export const categorySchema = z.object({
     name: z.string().min(1, "category name is required"),
     billboard_id: z.string().min(1, "billboard is required"),
 })
+
+export const sizeSchema = z.object({
+    name: z.string().min(1, "size name is required"),
+    value: z.string().min(1, "size value is required"),
+})

@@ -24,6 +24,12 @@ const apiConfig = {
     createCategory: `${main}/create-category`,
     updateCategory: `${main}/update-category`,
     deleteCategory: `${main}/delete-category`,
+
+    getSize: `${main}/get-size`,
+    getSizes: `${main}/get-sizes`,
+    createSize: `${main}/create-size`,
+    updateSize: `${main}/update-size`,
+    deleteSize: `${main}/delete-size`,
 }
 
 export default apiConfig
