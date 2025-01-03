@@ -27,3 +27,8 @@ export const sizeSchema = z.object({
     name: z.string().min(1, "size name is required"),
     value: z.string().min(1, "size value is required"),
 })
+
+export const colorSchema = z.object({
+    name: z.string().min(1, "color name is required"),
+    value: z.string().min(4).regex(/^#/, { message: "value must be a valid hex code" }),
+})

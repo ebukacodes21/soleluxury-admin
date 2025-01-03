@@ -30,6 +30,12 @@ const apiConfig = {
     createSize: `${main}/create-size`,
     updateSize: `${main}/update-size`,
     deleteSize: `${main}/delete-size`,
+
+    getColor: `${main}/get-color`,
+    getColors: `${main}/get-colors`,
+    createColor: `${main}/create-color`,
+    updateColor: `${main}/update-color`,
+    deleteColor: `${main}/delete-color`,
 }
 
 export default apiConfig
