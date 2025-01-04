@@ -24,3 +24,8 @@ export const formatError = (err: any) => {
     return "Request failed. please try again.";
   }
 };
+
+export const formatter = new Intl.NumberFormat("en-NG", {
+  style: "currency",
+  currency: "NGN"
+})

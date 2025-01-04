@@ -36,6 +36,12 @@ const apiConfig = {
     createColor: `${main}/create-color`,
     updateColor: `${main}/update-color`,
     deleteColor: `${main}/delete-color`,
+
+    getProduct: `${main}/get-product`,
+    getProducts: `${main}/get-products`,
+    createProduct: `${main}/create-product`,
+    updateProduct: `${main}/update-product`,
+    deleteProduct: `${main}/delete-product`,
 }
 
 export default apiConfig
