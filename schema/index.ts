@@ -32,3 +32,15 @@ export const colorSchema = z.object({
     name: z.string().min(1, "color name is required"),
     value: z.string().min(4).regex(/^#/, { message: "value must be a valid hex code" }),
 })
+
+export const productSchema = z.object({
+    name: z.string().min(1, "Product name is required"), 
+    description: z.string().min(1, "Product description is required"), 
+    images: z.object({ url: z.string() }).array(),
+    price: z.coerce.number().min(1, "price is required"),
+    category_id: z.number().min(1, "category id is required"), 
+    color_id: z.number().min(1, "color id is required"), 
+    size_id: z.number().min(1, "size id is required"), 
+    is_featured: z.boolean().default(false).optional(),
+    is_archived: z.boolean().default(false).optional(),
+  });

@@ -20,7 +20,6 @@ const ImageUpload: FC<ImageUploadProp> = ({
   value,
 }) => {
   const [mounted, setIsMounted] = useState<boolean>(false);
-
   useEffect(() => {
     setIsMounted(true);
   }, []);
