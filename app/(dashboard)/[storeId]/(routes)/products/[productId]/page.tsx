@@ -29,7 +29,7 @@ const page = async ({
     const res = await axios({
       method: "GET",
       url: apiConfig.getProduct,
-      params: { id: Number(productId) },
+      params: { product_id: Number(productId), store_id: Number(storeId) },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -116,7 +116,7 @@ const page = async ({
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <ProductForm
-          initialData={productData.product}
+          initialData={productData.productRes}
           categories={categoryData.categories}
           colors={colorData.colors}
           sizes={sizeData.sizes}

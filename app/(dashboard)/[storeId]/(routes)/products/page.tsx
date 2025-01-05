@@ -40,16 +40,16 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     }
   }
 
-  const formattedProducts: ProductColumn[] = products?.products?.map(
+  const formattedProducts: ProductColumn[] = products?.productRes?.map(
     (item: any) => ({
       id: item.id,
       name: item.name,
-      is_featured: item.is_featured,
-      is_archived: item.is_archived,
+      is_featured: item.is_featured ? item.is_featured : false,
+      is_archived: item.is_archived ? item.is_archived : false,
       price: formatter.format(item.price),
-      category: item.category.name,
-      size: item.size.name,
-      color: item.color.value,
+      category: item.category_name,
+      size: item.size_value,
+      color: item.color_value,
       created_at: format(item.created_at, "MMM do, yyyy"),
     })
   );

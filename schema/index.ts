@@ -38,9 +38,9 @@ export const productSchema = z.object({
     description: z.string().min(1, "Product description is required"), 
     images: z.object({ url: z.string() }).array(),
     price: z.coerce.number().min(1, "price is required"),
-    category_id: z.number().min(1, "category id is required"), 
-    color_id: z.number().min(1, "color id is required"), 
-    size_id: z.number().min(1, "size id is required"), 
+    category_id: z.string().min(1, "category id is required"), 
+    color_id: z.string().min(1, "color id is required"), 
+    size_id: z.string().min(1, "size id is required"), 
     is_featured: z.boolean().default(false).optional(),
     is_archived: z.boolean().default(false).optional(),
   });

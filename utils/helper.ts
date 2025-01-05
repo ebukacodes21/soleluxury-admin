@@ -20,6 +20,10 @@ export const formatError = (err: any) => {
     return "User is already logged in on this device";
   }
 
+  if (errorMessage.includes("no user found sql")) {
+    return "Admin not found";
+  }
+
   if (err.status === 500) {
     return "Request failed. please try again.";
   }

@@ -57,9 +57,9 @@ const ProductForm: FC<ProductFormProp> = ({ initialData, categories, colors, siz
       description: "",
       images: [],
       price: 0,
-      category_id: 0,
-      color_id: 0,
-      size_id: 0,
+      category_id: "",
+      color_id: "",
+      size_id: "",
       is_archived: false,
       is_featured: false,
     },
@@ -68,15 +68,17 @@ const ProductForm: FC<ProductFormProp> = ({ initialData, categories, colors, siz
   const onSubmit = async (data: productFormValue) => {
     setLoading(true);
     let result;
+
     if (initialData?.name) {
       result = await apiCall("/api/product/update", "PATCH", {
-        id: Number(params.productId),
+        product_id: Number(params.productId),
         store_id: Number(params.storeId),
         name: data.name,
         description: data.description,
         price: data.price,
-        category_id: data.category_id,
-        size_id: data.size_id,
+        images: data.images,
+        category_id: Number(data.category_id),
+        size_id: Number(data.size_id),
         color_id: data.color_id,
         is_featured: data.is_featured,
         is_archived: data.is_archived
@@ -88,15 +90,16 @@ const ProductForm: FC<ProductFormProp> = ({ initialData, categories, colors, siz
         description: data.description,
         price: data.price,
         images: data.images,
-        category_id: data.category_id,
-        size_id: data.size_id,
-        color_id: data.color_id,
+        category_id: Number(data.category_id),
+        size_id: Number(data.size_id),
+        color_id: Number(data.color_id),
         is_featured: data.is_featured,
         is_archived: data.is_archived
       });
     }
 
     if (result.name === "AxiosError") {
+      console.log(result)
       setLoading(false);
       return;
     }
@@ -248,8 +251,8 @@ const ProductForm: FC<ProductFormProp> = ({ initialData, categories, colors, siz
                   <Select
                     disabled={loading}
                     onValueChange={field.onChange}
-                    value={String(field.value)}
-                    defaultValue={String(field.value)}>
+                    value={field.value}
+                    defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue defaultValue={field.value} placeholder="Select a category" />
@@ -257,7 +260,7 @@ const ProductForm: FC<ProductFormProp> = ({ initialData, categories, colors, siz
                       </FormControl>
                       <SelectContent>
                       {categories && categories.map((item) => (
-                        <SelectItem key={item.id} value={String(item.id)}>
+                        <SelectItem key={item.id} value={item.id}>
                           {item.name}
                         </SelectItem>
                       ))}
