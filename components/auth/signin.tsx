@@ -23,7 +23,7 @@ import Image from "next/image";
 
 const Signin = () => {
   const [loading, setIsLoading] = useState<boolean>(false);
-  const router = useRouter()
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -33,24 +33,26 @@ const Signin = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    try {
-      setIsLoading(true);
-      const result = await apiCall("/api/user/login", "POST", {
-        email: values.email,
-        password: values.password,
-      });
-      // dispatch
-      router.push(routes.HOME)
-    } catch (error) {
-      const err = formatError(error)
+    setIsLoading(true);
+    const result = await apiCall("/api/user/login", "POST", {
+      email: values.email,
+      password: values.password,
+    });
+
+    if (result.name === "AxiosError"){
+      const err = formatError(result)
       toast.error(err)
-    } finally {
-      setIsLoading(false);
+      setIsLoading(false)
+      return
     }
+    router.push(routes.HOME);
   };
 
   return (
-    <Cardd title="Welcome Back!" description={`Login to access Soleluxury Dashboard`}>
+    <Cardd
+      title="Welcome Back!"
+      description={`Login to access Soleluxury Dashboard`}
+    >
       <div>
         <div className="py-4">
           <Form {...form}>
@@ -94,7 +96,7 @@ const Signin = () => {
                   variant={"destructive"}
                   className="font-bold"
                 >
-                  {loading ? "please wait...": "Login"}
+                  {loading ? "please wait..." : "Login"}
                   <ClipLoader loading={loading} color="fff" />
                 </Button>
               </div>

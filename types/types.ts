@@ -20,7 +20,7 @@ export type BillBoard = {
 }
 
 export type Category = {
-    id: number;
+    id: string;
     store_id: number;
     store: Store;
     billboard_id: number;
@@ -54,18 +54,18 @@ export type Color = {
 export type Product = {
     id: number;
     store_id: number;
-    store: Store;
-    category_id: number;
-    category: Category;
+    store_name: string;
+    category_id: string;
+    category_name: string;
     name: string;
     description: string;
     price: number;
     is_featured: boolean;
     is_archived: boolean;
-    size_id: number;
-    size: Size
-    color_id: number;
-    color: Color
+    size_id: string;
+    size_value: string;
+    color_id: string;
+    color_value: string;
     images: Image[]
     created_at: Date
 }

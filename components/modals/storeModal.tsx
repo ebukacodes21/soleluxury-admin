@@ -16,8 +16,9 @@ import {
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { apiCall } from "@/utils/helper";
+import { apiCall, formatError } from "@/utils/helper";
 import toast from "react-hot-toast";
+import { ClipLoader } from "react-spinners";
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
@@ -31,15 +32,14 @@ export const StoreModal = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof createStoreSchema>) => {
-    try {
-      setIsLoading(true)
-      const result = await apiCall("/api/store/create", "POST", { name: values.name })
-      window.location.assign(`${result?.store?.id}`)
-    } catch (error) {
-      toast.error("error while creating store")
-    } finally{
+    const result = await apiCall("/api/store/create", "POST", { name: values.name });
+    if (result.name === "AxiosError"){
+      const err = formatError(result)
+      toast.error(err)
       setIsLoading(false)
+      return
     }
+    window.location.assign(`${result?.store?.id}`)
   };
 
   return (
@@ -69,7 +69,10 @@ export const StoreModal = () => {
 
               <div className="pt-6 space-x-2 flex items-center justify-end">
                 <Button variant={'outline'} onClick={storeModal.onClose} disabled={loading}>Cancel</Button>
-                <Button type="submit" disabled={loading}>Create</Button>
+                <Button type="submit" disabled={loading}>
+                {loading ? "please wait..." : "Create"}
+                <ClipLoader loading={loading} color="fff" />
+                </Button>
               </div>
             </form>
           </Form>
