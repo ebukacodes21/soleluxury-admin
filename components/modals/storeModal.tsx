@@ -39,7 +39,8 @@ export const StoreModal = () => {
       setIsLoading(false)
       return
     }
-    window.location.assign(`${result?.store?.id}`)
+
+    window.location.assign(`${result?.store?.store_id}`)
   };
 
   return (

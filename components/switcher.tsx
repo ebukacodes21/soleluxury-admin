@@ -23,7 +23,7 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<
 >;
 
 interface SwitcherProps extends PopoverTriggerProps {
-  items: { name: string; id: number }[];
+  items: { store_name: string; store_id: number }[];
 }
 
 const Switcher = ({ className, items = [] }: SwitcherProps) => {
@@ -33,17 +33,17 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
   const router = useRouter();
 
   const fmtItems = items.map((item) => ({
-    name: item.name,
-    id: item.id,
+    store_name: item.store_name,
+    store_id: item.store_id,
   }));
 
   const currentStore = fmtItems.find((item) => {
-    return String(item.id) === params.storeId;
+    return String(item.store_id) === params.storeId;
   });
 
-  const onSelectStore = (store: { name: string; id: number }) => {
+  const onSelectStore = (store: { store_name: string; store_id: number }) => {
     setOpen(false);
-    router.push(`/${store.id}`);
+    router.push(`/${store.store_id}`);
   };
 
   return (
@@ -60,7 +60,7 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
           className={cn("w-[200px] justify-between", className)}
         >
           <Store className="mr-2 h-4 w-4" />
-          {currentStore?.name}
+          {currentStore?.store_name}
           <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -73,16 +73,16 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
             <CommandGroup heading="Stores">
               {fmtItems.map((store) => (
                 <CommandItem
-                  key={store.id}
+                  key={store.store_id}
                   onSelect={() => onSelectStore(store)}
                   className="text-sm"
                 >
                   <Store className="mr-2 h-4 w-4" />
-                  {store.name}
+                  {store.store_name}
                   <Check
                     className={cn(
                       "ml-auto h-4 w-4",
-                      currentStore?.id === store.id
+                      currentStore?.store_id === store.store_id
                         ? "opacity-100"
                         : "opacity-0"
                     )}
