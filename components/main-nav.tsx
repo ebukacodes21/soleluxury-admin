@@ -58,6 +58,11 @@ const MainNav = ({
       active: pathName === `/${params.storeId}/products`,
     },
     {
+      href: `/${params.storeId}/orders`,
+      label: "Orders",
+      active: pathName === `/${params.storeId}/orders`,
+    },
+    {
       href: `/${params.storeId}/settings`,
       label: "Settings",
       active: pathName === `/${params.storeId}/settings`,
@@ -65,7 +70,7 @@ const MainNav = ({
   ];
 
   return (
-    <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
+    <nav className={cn("hidden md:flex items-center space-x-4 lg:space-x-6", className)}>
       {menu.map((item) => (
         <Link
           href={item.href}
