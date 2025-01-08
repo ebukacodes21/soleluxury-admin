@@ -42,13 +42,10 @@ const Navbar = async () => {
         <div>
           <Switcher items={storeData.stores}/>
         </div>
-        {/* <div>
-          <MainNav className="mx-6" />
-        </div> */}
-      </div>
-      <div>
+        <div>
           <MainNav className="mx-6" />
         </div>
+      </div>
     </div>
   );
 };

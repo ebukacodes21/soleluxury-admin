@@ -71,9 +71,9 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
             <CommandInput placeholder="Search store..." />
             <CommandEmpty>No store found.</CommandEmpty>
             <CommandGroup heading="Stores">
-              {fmtItems.map((store) => (
+              {fmtItems.map((store, index) => (
                 <CommandItem
-                  key={store.store_id}
+                  key={index}
                   onSelect={() => onSelectStore(store)}
                   className="text-sm"
                 >

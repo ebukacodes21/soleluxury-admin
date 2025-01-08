@@ -44,7 +44,7 @@ const page = async ({ params }: { params: { storeId: string } }) => {
       id: item.id,
       name: item.name,
       billboard_id: item.billboard_id,
-      billboard_label: item.billboard_label,
+      billboard_label: item.billboard.map((board: any) => board.label),
       created_at: format(item.created_at, "MMM do, yyyy"),
     })
   );

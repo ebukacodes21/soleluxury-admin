@@ -39,7 +39,7 @@ export default async function SetupLayout({
   }
 
   if (storeData && !storeData.error) {
-    redirect(`${storeData?.store?.store_id}`);
+    redirect(`${storeData?.store?.id}`);
   }
 
   return (
