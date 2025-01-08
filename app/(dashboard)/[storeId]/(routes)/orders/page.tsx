@@ -1,12 +1,13 @@
 import React from "react";
-import CategoryClient from "./components/client";
+import OrderClient from "./components/client";
 import axios from "axios";
 import apiConfig from "@/services/apiconfig";
 import { redirect } from "next/navigation";
 import { COOKIE_NAME, routes } from "@/constants";
 import { cookies } from "next/headers";
-import { CategoryColumn } from "./components/column";
+import { OrderColumn } from "./components/column";
 import { format } from "date-fns";
+import { formatter } from "@/utils/helper";
 
 const page = async ({ params }: { params: { storeId: string } }) => {
   const { storeId } = await params;
@@ -17,44 +18,47 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     redirect(routes.SIGNIN);
   }
 
-  let categories = null;
+  let orders = null;
   try {
     const res = await axios({
       method: "GET",
-      url: apiConfig.getCategories,
+      url: apiConfig.getOrders,
       params: { store_id: Number(storeId) },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
     });
 
-    categories = res.data;
+    orders = res.data;
   } catch (error: any) {
     if (error.code === "ECONNREFUSED") {
-      categories = { error: "Failed to connect to the server." };
+      orders = { error: "Failed to connect to the server." };
     } else if (error.response) {
-      categories = { error: error.response.data };
+      orders = { error: error.response.data };
     } else {
-      categories = { error: "Unknown error occurred." };
+      orders = { error: "Unknown error occurred." };
     }
   }
 
-  const formattedcategories: CategoryColumn[] = categories?.categories?.map(
+  const formattedorders: OrderColumn[] = orders?.productRes?.map(
     (item: any) => ({
       id: item.id,
-      name: item.name,
-      billboard_id: item.billboard_id,
-      billboard_label: item.billboard.map((board: any) => board.label),
-      created_at: format(item.created_at, "MMM do, yyyy"),
+      phone: item.phone,
+      address: item.address,
+      products: item.items,
+      totalPrice: 0,
+      isPaid: item.is_paid,
+      createdAt: format(item.created_at, "MMM do, yyyy"),
     })
   );
+  const data = formattedorders ? formattedorders : []
 
-  const data = formattedcategories ? formattedcategories : []
+  console.log(orders)
 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <CategoryClient data={data} />
+        <OrderClient data={data} />
       </div>
     </div>
   );

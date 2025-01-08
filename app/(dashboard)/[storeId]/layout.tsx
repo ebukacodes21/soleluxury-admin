@@ -13,7 +13,6 @@ export default async function DashboardLayout({
   params: { storeId: string };
 }) {
   const { storeId } = await params; 
-
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;
 
@@ -32,7 +31,7 @@ export default async function DashboardLayout({
     const res = await axios({
       method: "GET",
       url: apiConfig.getStore,
-      params: { id: Number(storeId) },
+      params: { id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
