@@ -25,7 +25,7 @@ const page = async ({ params }: { params: { sizeId: string } }) => {
     const res = await axios({
       method: "GET",
       url: apiConfig.getSize,
-      params: { id: Number(sizeId) },
+      params: { id: sizeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
