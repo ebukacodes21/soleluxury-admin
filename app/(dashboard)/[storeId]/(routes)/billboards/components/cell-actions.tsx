@@ -26,8 +26,8 @@ export const CellActions: FC<CellActionsProps> = ({ data }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
-  const onCopy = (id: number) => {
-    navigator.clipboard.writeText(String(id));
+  const onCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
     toast.success("Billboard ID copied!");
   };
 
