@@ -25,7 +25,7 @@ const SettingPage: FC<SettingProp> = async ({ params }) => {
     const res = await axios({
       method: "GET",
       url: apiConfig.getStore,
-      params: { id: Number(storeId) },
+      params: { id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },

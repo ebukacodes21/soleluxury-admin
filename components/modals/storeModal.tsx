@@ -40,8 +40,8 @@ export const StoreModal = () => {
       setIsLoading(false);
       return;
     }
-    console.log(result);
-    window.location.assign(`/${result?.store?.id}`);
+
+    window.location.assign(`${result?.store?.id}`);
   };
 
   return (

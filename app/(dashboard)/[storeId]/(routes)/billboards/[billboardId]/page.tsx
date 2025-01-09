@@ -25,7 +25,7 @@ const page = async ({ params }: { params: { billboardId: string } }) => {
     const res = await axios({
       method: "GET",
       url: apiConfig.getBillboard,
-      params: { id: Number(billboardId) },
+      params: { id: billboardId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },

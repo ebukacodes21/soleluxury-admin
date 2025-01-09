@@ -10,7 +10,7 @@ export const loginSchema = z.object({
 })
 
 export const settingSchema = z.object({
-    store_name: z.string().min(1, "store name is required")
+    name: z.string().min(1, "store name is required")
 })
 
 export const billboardSchema = z.object({

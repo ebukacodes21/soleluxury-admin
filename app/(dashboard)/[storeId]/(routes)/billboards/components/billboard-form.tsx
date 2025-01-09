@@ -13,7 +13,6 @@ import Heading from "@/components/ui/heading";
 import ImageUpload from "@/components/ui/image-upload";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import { routes } from "@/constants";
 import { billboardSchema } from "@/schema";
 import { apiCall } from "@/utils/helper";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,8 +28,7 @@ type BillboardFormProp = {
   initialData: {
     image_url: string;
     label: string;
-    id: number;
-    store_id: number;
+    id: string;
   } | null;
 };
 
@@ -64,14 +62,13 @@ const BillboardForm: FC<BillboardFormProp> = ({ initialData }) => {
     let result;
     if (initialData?.label) {
       result = await apiCall("/api/billboard/update", "PATCH", {
-        id: Number(params.billboardId),
-        store_id: Number(params.storeId),
+        id: params.billboardId,
         image_url: data.image_url,
         label: data.label,
       });
     } else {
       result = await apiCall("/api/billboard/create", "POST", {
-        store_id: Number(params.storeId),
+        store_id: params.storeId,
         image_url: data.image_url,
         label: data.label,
       });
@@ -90,8 +87,8 @@ const BillboardForm: FC<BillboardFormProp> = ({ initialData }) => {
 
   const onConfirm = async () => {
     setLoading(true);
-    const result = await apiCall("/api/billboard/delete", "POST", {
-      id: Number(initialData?.id),
+    const result = await apiCall("/api/billboard/delete", "GET", {
+      id: initialData?.id,
     });
 
     if (result.name === "AxiosError") {

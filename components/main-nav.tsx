@@ -2,24 +2,28 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams, usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { apiCall } from "@/utils/helper";
 import toast from "react-hot-toast";
 import { routes } from "@/constants";
+import { ClipLoader } from "react-spinners";
 
 const MainNav = ({
   className,
   ...props
 }: React.HtmlHTMLAttributes<HTMLElement>) => {
+  const [loading, setLoading] = useState<boolean>(false)
   const pathName = usePathname();
   const params = useParams();
   const router = useRouter()
 
   const handleLogout = async () => {
-    const result = await apiCall("/api/user/logout", "POST");
+    setLoading(true)
+    const result = await apiCall("/api/user/logout", "GET");
     if (result.name === "AxiosError") {
       toast.error(`failed to log out`);
+      setLoading(false)
       return;
     }
     toast.success(result["message"]);
@@ -87,7 +91,10 @@ const MainNav = ({
       ))}
 
       <div className="ml-auto flex items-center space-x-4">
-        <Button onClick={handleLogout}>Logout</Button>
+        <Button onClick={handleLogout}>
+        {loading ? "logging out..." : "Logout"}
+        <ClipLoader loading={loading} color="fff" />
+        </Button>
       </div>
     </nav>
   );

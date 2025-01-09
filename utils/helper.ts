@@ -2,11 +2,11 @@ import axios from "axios";
 
 export const apiCall = async (url: string, method: string, data?: object) => {
   try {
-    const res = await axios({
-      url,
-      method,
-      data,
-    });
+    const isGetRequest = method.toUpperCase() === 'GET';
+    const config: any = { url, method };
+    isGetRequest ? config.params = data : config.data = data
+    
+    const res = await axios(config);
     return res.data;
   } catch (error) {
     return error;

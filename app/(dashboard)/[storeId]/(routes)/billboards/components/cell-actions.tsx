@@ -33,8 +33,8 @@ export const CellActions: FC<CellActionsProps> = ({ data }) => {
 
   const onDelete = async () => {
     setLoading(true);
-    const result = await apiCall("/api/billboard/delete", "POST", {
-      id: Number(data?.id),
+    const result = await apiCall("/api/billboard/delete", "GET", {
+      id: data?.id,
     });
 
     if (result.name === "AxiosError") {
