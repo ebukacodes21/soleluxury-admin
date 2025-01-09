@@ -16,7 +16,7 @@ const page = async ({ params }: { params: { storeId: string, categoryId: string 
   }
 
   if (!categoryId || categoryId === typeof undefined) {
-    console.error("billboard ID is missing!");
+    console.error("category ID is missing!");
     return null;
   }
 
@@ -25,7 +25,7 @@ const page = async ({ params }: { params: { storeId: string, categoryId: string 
     const res = await axios({
       method: "GET",
       url: apiConfig.getCategory,
-      params: { id: Number(categoryId) },
+      params: { id: categoryId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -47,7 +47,7 @@ const page = async ({ params }: { params: { storeId: string, categoryId: string 
     const res = await axios({
       method: "GET",
       url: apiConfig.getBillboards,
-      params: { store_id: Number(storeId) },
+      params: { store_id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },

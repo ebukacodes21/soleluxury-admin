@@ -66,15 +66,14 @@ const CategoryForm: FC<CategoryProp> = ({ initialData, billboards }) => {
     let result;
     if (initialData?.name) {
       result = await apiCall("/api/category/update", "PATCH", {
-        id: Number(initialData.id),
-        store_id: Number(params.storeId),
+        id: initialData.id,
+        billboard_id: data.billboard_id,
         name: data.name,
-        billboard_label: initialData.billboard_label
       });
     } else {
       result = await apiCall("/api/category/create", "POST", {
-        store_id: Number(params.storeId),
-        billboard_id: Number(data.billboard_id),
+        store_id: params.storeId,
+        billboard_id: data.billboard_id,
         name: data.name,
       });
     }
@@ -93,7 +92,7 @@ const CategoryForm: FC<CategoryProp> = ({ initialData, billboards }) => {
   const onConfirm = async () => {
     setLoading(true);
     const result = await apiCall("/api/category/delete", "POST", {
-      id: Number(initialData?.id),
+      id: initialData?.id,
     });
 
     if (result.name === "AxiosError") {

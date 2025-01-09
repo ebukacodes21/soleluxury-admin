@@ -4,9 +4,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { CellActions } from "./cell-actions";
 
 export type CategoryColumn = {
-  id: number;
+  id: string;
   name: string;
-  billboard_id: number;
+  billboard_id: string;
   billboard_label: string;
   created_at: string;
 };

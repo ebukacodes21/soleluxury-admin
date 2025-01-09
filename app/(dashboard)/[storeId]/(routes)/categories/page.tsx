@@ -22,7 +22,7 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     const res = await axios({
       method: "GET",
       url: apiConfig.getCategories,
-      params: { store_id: Number(storeId) },
+      params: { store_id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -43,8 +43,8 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     (item: any) => ({
       id: item.id,
       name: item.name,
-      billboard_id: item.billboard_id,
-      billboard_label: item.billboard.map((board: any) => board.label),
+      billboard_id: item.billboard.id,
+      billboard_label: item.billboard.label,
       created_at: format(item.created_at, "MMM do, yyyy"),
     })
   );
