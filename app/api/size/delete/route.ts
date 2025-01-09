@@ -3,16 +3,16 @@ import ApiConfig from "@/services/apiconfig";
 import axios from "axios";
 import { NextResponse, NextRequest } from 'next/server';
 
-export async function POST(request: NextRequest) {
+export async function GET(request: NextRequest) {
     const { method, cookies } = request;
-    const body = await request.json();
     const token = cookies.get(COOKIE_NAME)?.value || "";
+    const params = Object.fromEntries(request.nextUrl.searchParams.entries());
     
     try {
         const res = await axios({
             method: method,
             url: ApiConfig.deleteSize,
-            data: body,
+            params,
             headers: {
                 Authorization: `Bearer ${token}`
             }

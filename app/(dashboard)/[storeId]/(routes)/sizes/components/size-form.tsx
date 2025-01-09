@@ -27,8 +27,8 @@ type SizeFormProp = {
   initialData: {
     name: string;
     value: string;
-    id: number;
-    store_id: number;
+    id: string;
+    store_id: string;
     store_name: string;
   } | null;
 };
@@ -63,14 +63,13 @@ const SizeForm: FC<SizeFormProp> = ({ initialData }) => {
     let result;
     if (initialData?.name) {
       result = await apiCall("/api/size/update", "PATCH", {
-        id: Number(params.sizeId),
-        store_id: Number(params.storeId),
+        id: params.sizeId,
         name: data.name,
         value: data.value,
       });
     } else {
       result = await apiCall("/api/size/create", "POST", {
-        store_id: Number(params.storeId),
+        store_id: params.storeId,
         name: data.name,
         value: data.value,
       });
@@ -89,8 +88,8 @@ const SizeForm: FC<SizeFormProp> = ({ initialData }) => {
 
   const onConfirm = async () => {
     setLoading(true);
-    const result = await apiCall("/api/size/delete", "POST", {
-      id: Number(initialData?.id),
+    const result = await apiCall("/api/size/delete", "GET", {
+      id: initialData?.id,
     });
 
     if (result.name === "AxiosError") {
