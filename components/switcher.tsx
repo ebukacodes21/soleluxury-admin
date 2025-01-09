@@ -23,7 +23,7 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<
 >;
 
 interface SwitcherProps extends PopoverTriggerProps {
-  items: { store_name: string; store_id: number }[];
+  items: { name: string; id: string }[];
 }
 
 const Switcher = ({ className, items = [] }: SwitcherProps) => {
@@ -33,17 +33,17 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
   const router = useRouter();
 
   const fmtItems = items.map((item) => ({
-    store_name: item.store_name,
-    store_id: item.store_id,
+    name: item.name,
+    id: item.id,
   }));
 
   const currentStore = fmtItems.find((item) => {
-    return String(item.store_id) === params.storeId;
+    return String(item.id) === params.storeId;
   });
 
-  const onSelectStore = (store: { store_name: string; store_id: number }) => {
+  const onSelectStore = (store: { name: string; id: string }) => {
     setOpen(false);
-    router.push(`/${store.store_id}`);
+    router.push(`/${store.id}`);
   };
 
   return (
@@ -60,7 +60,7 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
           className={cn("w-[200px] justify-between", className)}
         >
           <Store className="mr-2 h-4 w-4" />
-          {currentStore?.store_name}
+          {currentStore?.name}
           <ChevronsUpDown className="ml-auto h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -78,11 +78,11 @@ const Switcher = ({ className, items = [] }: SwitcherProps) => {
                   className="text-sm"
                 >
                   <Store className="mr-2 h-4 w-4" />
-                  {store.store_name}
+                  {store.name}
                   <Check
                     className={cn(
                       "ml-auto h-4 w-4",
-                      currentStore?.store_id === store.store_id
+                      currentStore?.id === store.id
                         ? "opacity-100"
                         : "opacity-0"
                     )}

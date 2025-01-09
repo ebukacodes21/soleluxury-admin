@@ -27,7 +27,7 @@ import { ClipLoader } from "react-spinners";
 import * as z from "zod";
 
 type SettingsFormProp = {
-  initialData: { store_name: string; store_id: number };
+  initialData: { name: string; id: string };
 };
 
 type settingFormValue = z.infer<typeof settingSchema>;
@@ -42,7 +42,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
   const form = useForm<settingFormValue>({
     resolver: zodResolver(settingSchema),
     defaultValues: {
-      store_name: initialData.store_name,
+      name: initialData.name,
     },
   });
 
@@ -51,8 +51,8 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
       setLoading(true);
       const result = await apiCall("/api/store/update", "PATCH", {
         ...data,
-        id: Number(params.storeId),
-        name: data.store_name
+        id: params.storeId,
+        name: data.name
       });
       router.refresh();
       toast.success(result.message);
@@ -66,8 +66,8 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
   const onConfirm = async () => {
     try {
       setLoading(true);
-      const result = await apiCall("/api/store/delete", "POST", {
-        id: Number(params.storeId),
+      const result = await apiCall("/api/store/delete", "GET", {
+        id: params.storeId,
       });
       toast.success(result.message);
       router.refresh();
@@ -110,7 +110,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
-              name="store_name"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name:</FormLabel>
