@@ -25,7 +25,7 @@ const page = async ({ params }: { params: { colorId: string } }) => {
     const res = await axios({
       method: "GET",
       url: apiConfig.getColor,
-      params: { id: Number(colorId) },
+      params: { id: colorId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },

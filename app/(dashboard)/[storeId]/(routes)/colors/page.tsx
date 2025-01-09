@@ -22,7 +22,7 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     const res = await axios({
       method: "GET",
       url: apiConfig.getColors,
-      params: { store_id: Number(storeId) },
+      params: { store_id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
