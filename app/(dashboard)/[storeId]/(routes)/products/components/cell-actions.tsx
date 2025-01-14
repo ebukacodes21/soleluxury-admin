@@ -26,15 +26,15 @@ export const CellActions: FC<CellActionsProps> = ({ data }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
-  const onCopy = (id: number) => {
-    navigator.clipboard.writeText(String(id));
+  const onCopy = (id: string) => {
+    navigator.clipboard.writeText(id);
     toast.success("product ID copied!");
   };
 
   const onDelete = async () => {
     setLoading(true);
-    const result = await apiCall("/api/product/delete", "POST", {
-      product_id: Number(data?.id),
+    const result = await apiCall("/api/product/delete", "GET", {
+      product_id: data?.id,
     });
 
     if (result.name === "AxiosError") {

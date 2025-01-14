@@ -23,7 +23,7 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     const res = await axios({
       method: "GET",
       url: apiConfig.getProducts,
-      params: { store_id: Number(storeId) },
+      params: { store_id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -47,9 +47,9 @@ const page = async ({ params }: { params: { storeId: string } }) => {
       is_featured: item.is_featured ? item.is_featured : false,
       is_archived: item.is_archived ? item.is_archived : false,
       price: formatter.format(item.price),
-      category: item.category_name,
-      size: item.size_value,
-      color: item.color_value,
+      category: item.category.name,
+      size: item.size.value,
+      color: item.color.value,
       created_at: format(item.created_at, "MMM do, yyyy"),
     })
   );

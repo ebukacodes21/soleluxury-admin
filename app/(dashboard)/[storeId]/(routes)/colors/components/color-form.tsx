@@ -59,14 +59,13 @@ const ColorForm: FC<ColorFormProp> = ({ initialData }) => {
     let result;
     if (initialData?.name) {
       result = await apiCall("/api/color/update", "PATCH", {
-        id: Number(params.colorId),
-        store_id: Number(params.storeId),
+        id: params.colorId,
         name: data.name,
         value: data.value,
       });
     } else {
       result = await apiCall("/api/color/create", "POST", {
-        store_id: Number(params.storeId),
+        store_id: params.storeId,
         name: data.name,
         value: data.value,
       });
@@ -85,8 +84,8 @@ const ColorForm: FC<ColorFormProp> = ({ initialData }) => {
 
   const onConfirm = async () => {
     setLoading(true);
-    const result = await apiCall("/api/color/delete", "POST", {
-      id: Number(initialData?.id),
+    const result = await apiCall("/api/color/delete", "GET", {
+      id: initialData?.id,
     });
 
     if (result.name === "AxiosError") {
