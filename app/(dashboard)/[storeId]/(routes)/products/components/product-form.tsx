@@ -71,28 +71,27 @@ const ProductForm: FC<ProductFormProp> = ({ initialData, categories, colors, siz
 
     if (initialData?.name) {
       result = await apiCall("/api/product/update", "PATCH", {
-        product_id: Number(params.productId),
-        store_id: Number(params.storeId),
+        product_id: params.productId,
         name: data.name,
         description: data.description,
         price: data.price,
         images: data.images,
-        category_id: Number(data.category_id),
-        size_id: Number(data.size_id),
+        category_id: data.category_id,
+        size_id: data.size_id,
         color_id: data.color_id,
         is_featured: data.is_featured,
         is_archived: data.is_archived
       });
     } else {
       result = await apiCall("/api/product/create", "POST", {
-        store_id: Number(params.storeId),
+        store_id: params.storeId,
         name: data.name,
         description: data.description,
         price: data.price,
         images: data.images,
-        category_id: Number(data.category_id),
-        size_id: Number(data.size_id),
-        color_id: Number(data.color_id),
+        category_id: data.category_id,
+        size_id: data.size_id,
+        color_id: data.color_id,
         is_featured: data.is_featured,
         is_archived: data.is_archived
       });
@@ -112,8 +111,8 @@ const ProductForm: FC<ProductFormProp> = ({ initialData, categories, colors, siz
 
   const onConfirm = async () => {
     setLoading(true);
-    const result = await apiCall("/api/product/delete", "POST", {
-      id: Number(initialData?.id),
+    const result = await apiCall("/api/product/delete", "GET", {
+      id: initialData?.id,
     });
 
     if (result.name === "AxiosError") {

@@ -29,7 +29,7 @@ const page = async ({
     const res = await axios({
       method: "GET",
       url: apiConfig.getProduct,
-      params: { product_id: Number(productId), store_id: Number(storeId) },
+      params: { product_id: productId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -51,7 +51,7 @@ const page = async ({
     const res = await axios({
       method: "GET",
       url: apiConfig.getCategories,
-      params: { store_id: Number(storeId) },
+      params: { store_id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -73,7 +73,7 @@ const page = async ({
     const res = await axios({
       method: "GET",
       url: apiConfig.getSizes,
-      params: { store_id: Number(storeId) },
+      params: { store_id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -95,7 +95,7 @@ const page = async ({
     const res = await axios({
       method: "GET",
       url: apiConfig.getColors,
-      params: { store_id: Number(storeId) },
+      params: { store_id: storeId },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
