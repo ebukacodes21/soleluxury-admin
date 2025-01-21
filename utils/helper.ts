@@ -13,7 +13,6 @@ export const apiCall = async (url: string, method: string, data?: object) => {
   }
 };
 
-
 export const formatError = (err: any) => {
   const errorMessage = err.response?.data?.error?.message || "";
   if (errorMessage.includes("failed to create session")) {

@@ -6,19 +6,18 @@ import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/data-table";
 
 type OrderClientProp = {
-  data: OrderColumn[]
-}
+  data: OrderColumn[];
+};
 
-const OrderClient:FC<OrderClientProp> = ({ data }) => {
-
+const OrderClient: FC<OrderClientProp> = ({ data }) => {
   return (
     <>
-        <Heading
-          title={`Orders (${data?.length})`}
-          description="Manage all orders"
-        />
+      <Heading
+        title={`Orders (${data?.length})`}
+        description="Manage all orders"
+      />
       <Separator />
-      <DataTable columns={columns} data={data} searchKey="products"/>
+      <DataTable columns={columns} data={data} searchKey="products" />
     </>
   );
 };
