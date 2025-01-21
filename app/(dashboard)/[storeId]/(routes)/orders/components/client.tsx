@@ -15,7 +15,7 @@ const OrderClient:FC<OrderClientProp> = ({ data }) => {
     <>
         <Heading
           title={`Orders (${data?.length})`}
-          description="Manage orders for your store"
+          description="Manage all orders"
         />
       <Separator />
       <DataTable columns={columns} data={data} searchKey="products"/>
