@@ -43,11 +43,8 @@ const apiConfig = {
     updateProduct: `${main}/update-product`,
     deleteProduct: `${main}/delete-product`,
 
-    getOrder: `${main}/get-order`,
-    getOrders: `${main}/get-orders`,
     createOrder: `${main}/create-order`,
-    updateOrder: `${main}/update-order`,
-    deleteOrder: `${main}/delete-order`,
+    getOrders: `${main}/get-orders`,
 }
 
 export default apiConfig

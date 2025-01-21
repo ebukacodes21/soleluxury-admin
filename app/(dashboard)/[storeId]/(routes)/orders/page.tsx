@@ -9,8 +9,7 @@ import { OrderColumn } from "./components/column";
 import { format } from "date-fns";
 import { formatter } from "@/utils/helper";
 
-const page = async ({ params }: { params: { storeId: string } }) => {
-  const { storeId } = await params;
+const page = async () => {
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;
 
@@ -23,7 +22,6 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     const res = await axios({
       method: "GET",
       url: apiConfig.getOrders,
-      params: { store_id: Number(storeId) },
       headers: {
         Authorization: `Bearer ${userToken}`,
       },
@@ -40,20 +38,18 @@ const page = async ({ params }: { params: { storeId: string } }) => {
     }
   }
 
-  const formattedorders: OrderColumn[] = orders?.productRes?.map(
+  const formattedorders: OrderColumn[] = orders?.orders?.map(
     (item: any) => ({
       id: item.id,
       phone: item.phone,
       address: item.address,
-      products: item.items,
-      totalPrice: 0,
-      isPaid: item.is_paid,
+      products: item.items.map((prod: any) => prod.name),
+      totalPrice: formatter.format(item.items.reduce((total: number, prod: any) => total + prod.price, 0)),
+      isPaid: item.is_paid ? item.is_paid : false,
       createdAt: format(item.created_at, "MMM do, yyyy"),
     })
   );
   const data = formattedorders ? formattedorders : []
-
-  console.log(orders)
 
   return (
     <div className="flex-col">
