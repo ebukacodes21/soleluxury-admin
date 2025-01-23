@@ -9,7 +9,7 @@ import { ProductColumn } from "./components/column";
 import { format } from "date-fns";
 import { formatter } from "@/utils/helper";
 
-const page = async ({ params }: { params: { storeId: string } }) => {
+const page = async ({ params }: { params: any }) => {
   const { storeId } = await params;
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;

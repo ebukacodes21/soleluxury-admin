@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import Image from "next/image";
+// import Image from "next/image";
 
 type CardProps = {
     title: string;
@@ -16,11 +16,10 @@ type CardProps = {
     children: React.ReactNode
 }
 
-
 export function Cardd({children, title, description}: CardProps) {
   return (
     <Card className="w-[350px]">
-      <Image height={80} width={80} src={'/logo.jpg'} alt="logo" className=""/>
+      {/* <Image height={80} width={80} src={'/logo2.png'} alt="logo" className="bg-transparent"/> */}
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

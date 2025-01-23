@@ -9,7 +9,7 @@ import ProductForm from "../components/product-form";
 const page = async ({
   params,
 }: {
-  params: { storeId: string; productId: string };
+  params: any;
 }) => {
   const { storeId, productId } = await params;
   const cookieStore = cookies();

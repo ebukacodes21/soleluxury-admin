@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import CategoryForm from "../components/category-form";
 
-const page = async ({ params }: { params: { storeId: string, categoryId: string } }) => {
+const page = async ({ params }: { params: any }) => {
   const { categoryId, storeId } = await params;
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;
@@ -69,7 +69,7 @@ const page = async ({ params }: { params: { storeId: string, categoryId: string 
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <CategoryForm billboards={billboardData} initialData={categoryData?.category!} />
+        <CategoryForm billboards={billboardData} initialData={categoryData.category!} />
       </div>
     </div>
   );
