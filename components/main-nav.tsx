@@ -8,6 +8,7 @@ import { apiCall } from "@/utils/helper";
 import toast from "react-hot-toast";
 import { routes } from "@/constants";
 import { ClipLoader } from "react-spinners";
+import { ModeToggle } from "./toggle";
 
 const MainNav = ({
   className,
@@ -74,7 +75,7 @@ const MainNav = ({
   ];
 
   return (
-    <nav className={cn("hidden md:flex items-center space-x-4 lg:space-x-6", className)}>
+    <nav className={cn("hidden md:flex items-center space-x-4 lg:space-x-6", className)} {...props}>
       {menu.map((item) => (
         <Link
           href={item.href}
@@ -89,7 +90,9 @@ const MainNav = ({
           {item.label}
         </Link>
       ))}
-
+      <div>
+        <ModeToggle />
+      </div>
       <div className="ml-auto flex items-center space-x-4">
         <Button onClick={handleLogout}>
         {loading ? "logging out..." : "Logout"}

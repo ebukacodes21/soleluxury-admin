@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import SizeForm from "../components/size-form";
 
-const page = async ({ params }: { params: { sizeId: string } }) => {
+const page = async ({ params }: { params: any }) => {
   const { sizeId } = await params;
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;

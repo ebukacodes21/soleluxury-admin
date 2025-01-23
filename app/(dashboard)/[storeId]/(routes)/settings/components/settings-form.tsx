@@ -1,6 +1,5 @@
 "use client";
 import AlertModal from "@/components/modals/alert-modal";
-import { ApiAlert } from "@/components/ui/api-alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -14,7 +13,6 @@ import Heading from "@/components/ui/heading";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { routes } from "@/constants";
-import { useOrigin } from "@/hooks/useOrigin";
 import { settingSchema } from "@/schema";
 import { apiCall } from "@/utils/helper";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -36,7 +34,6 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
   const [open, setOpen] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const origin = useOrigin();
   const params = useParams();
 
   const form = useForm<settingFormValue>({
@@ -57,6 +54,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
       router.refresh();
       toast.success(result.message);
     } catch (error) {
+      console.log(error)
       toast.error("an error occurred");
     } finally {
       setLoading(false);
@@ -73,6 +71,7 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
       router.refresh();
       router.push(routes.HOME);
     } catch (error) {
+      console.log(error)
       toast.error("remove all products and categories first");
     } finally {
       setLoading(false);
@@ -133,8 +132,6 @@ const SettingsForm: FC<SettingsFormProp> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
-      <Separator />
-      <ApiAlert title="PUBLIC_API_URL" description={`${origin}/api/${params.storeId}`} variant="admin"/>
     </>
   );
 };

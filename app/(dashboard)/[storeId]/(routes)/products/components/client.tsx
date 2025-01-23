@@ -7,7 +7,6 @@ import { useParams, useRouter } from "next/navigation";
 import { ProductColumn, columns } from "./column";
 import { Separator } from "@/components/ui/separator";
 import { DataTable } from "@/components/ui/data-table";
-import ApiList from "@/components/ui/api-list";
 
 type ProductClientProp = {
   data: ProductColumn[]
@@ -34,9 +33,6 @@ const ProductClient:FC<ProductClientProp> = ({ data }) => {
       </div>
       <Separator />
       <DataTable columns={columns} data={data} searchKey="name"/>
-      <Heading title="API" description="API calls for Products"/>
-      <Separator />
-      <ApiList entityName="products" entityIdName="productId"/>
     </>
   );
 };

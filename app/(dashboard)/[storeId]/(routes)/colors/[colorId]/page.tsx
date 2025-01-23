@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 import ColorForm from "../components/color-form";
 
-const page = async ({ params }: { params: { colorId: string } }) => {
+const page = async ({ params }: { params: any }) => {
   const { colorId } = await params;
   const cookieStore = cookies();
   const userToken = (await cookieStore).get(COOKIE_NAME)?.value;

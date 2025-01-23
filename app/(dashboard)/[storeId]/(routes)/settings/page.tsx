@@ -7,7 +7,7 @@ import apiConfig from '@/services/apiconfig'
 import SettingsForm from './components/settings-form'
 
 type SettingProp = {
-  params : { storeId: string }
+  params: any
 }
 
 const SettingPage: FC<SettingProp> = async ({ params }) => {
